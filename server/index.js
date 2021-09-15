@@ -31,9 +31,15 @@ app.post("/api/GetStudentNumber", async (req, res) => {
     res.json({ number });
   }
 });
-app.get("/api/GetUnits", (req, res) => {
-  getUnits();
-  res.send("<h1>get units</h1>");
+app.get("/api/GetUnits", async (req, res) => {
+  try {
+    const units = (await getUnits()) || [];
+    res.json({ units });
+  } catch (err) {
+    console.log("Error occured in finding units");
+    console.log(err);
+    res.json({ units: [] });
+  }
 });
 // Serve out any static assets correctly
 app.use(express.static("../client/build"));
