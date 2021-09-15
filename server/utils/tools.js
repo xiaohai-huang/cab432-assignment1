@@ -37,3 +37,5 @@ async function parseUnits() {
   console.log(units);
   return units;
 }
+
+module.exports = parseUnits;

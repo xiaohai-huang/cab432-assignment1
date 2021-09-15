@@ -1,14 +1,15 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 const baseStyle = {
+  width: "200px",
   flex: 1,
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   padding: "20px",
   borderWidth: 2,
-  borderRadius: 2,
+  borderRadius: "100%",
   borderColor: "#eeeeee",
   borderStyle: "dashed",
   backgroundColor: "#fafafa",
@@ -29,13 +30,15 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
-export default function ImageUploader({ getBase64 }) {
+export default function ImageUploader({ getBase64 = () => {} }) {
+  const [img, setImg] = useState("");
   const onDrop = useCallback(
     async (acceptedFiles) => {
       const file = acceptedFiles[0];
       // Convert the file to Base64 format
       const base64 = await convertToBase64(file);
       getBase64(base64);
+      setImg(base64);
     },
     [getBase64]
   );
@@ -62,7 +65,17 @@ export default function ImageUploader({ getBase64 }) {
     <div className="container">
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        {img ? (
+          <img
+            alt=""
+            width="150px"
+            height="150px"
+            style={{ borderRadius: "100%", objectFit:"cover" }}
+            src={img}
+          />
+        ) : (
+          <p>Drop your QUT ID Card</p>
+        )}
       </div>
     </div>
   );

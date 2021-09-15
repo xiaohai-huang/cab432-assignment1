@@ -7,7 +7,8 @@ const app = express();
 const port = process.env.SERVER_PORT || 3000;
 const cors = require("cors");
 const morgan = require("morgan");
-const getUnits = require("./qut");
+const { getUnits, getAssessment } = require("./qut");
+
 app.use(cors());
 app.use(express.json({ limit: "50mb" })); // <==== parse request body as JSON
 app.use(morgan("tiny"));
@@ -28,12 +29,13 @@ app.post("/api/GetStudentNumber", async (req, res) => {
       error: "Cannot find the student number, Please retry.",
     });
   } else {
-    res.json({ number });
+    res.json({ number: `N${number}` });
   }
 });
-app.get("/api/GetUnits", async (req, res) => {
+
+app.get("/api/Units", async (req, res) => {
   try {
-    const units = (await getUnits()) || [];
+    const units = (await getUnits("n10172912", "Xiaohai520%")) || [];
     res.json({ units });
   } catch (err) {
     console.log("Error occured in finding units");
@@ -41,6 +43,20 @@ app.get("/api/GetUnits", async (req, res) => {
     res.json({ units: [] });
   }
 });
+
+// Find this student's all the assessments
+app.post("/api/Assessments", async (req, res) => {
+  const { studentNumber, password } = req.body;
+  console.log({ studentNumber, password });
+  const units = await getUnits(studentNumber, password);
+  const assessments = await Promise.all(
+    units.map(async (unit) => {
+      return await getAssessment(unit);
+    })
+  );
+  res.json({ assessments });
+});
+
 // Serve out any static assets correctly
 app.use(express.static("../client/build"));
 // Any routes that don't match on our static assets or api should be sent to the React Application
