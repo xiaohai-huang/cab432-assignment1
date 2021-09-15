@@ -4,15 +4,13 @@ const path = require("path");
 const express = require("express");
 const getStudentNumber = require("./ocr");
 const app = express();
-const port = 4000;
+const port = process.env.SERVER_PORT || 3000;
 const cors = require("cors");
 const morgan = require("morgan");
-
+const getUnits = require("./qut");
+app.use(cors());
 app.use(express.json({ limit: "50mb" })); // <==== parse request body as JSON
 app.use(morgan("tiny"));
-app.use(cors());
-// Serve out any static assets correctly
-app.use(express.static("../client/build"));
 
 // What's your favorite animal?
 app.get("/api/question", (req, res) => {
@@ -33,7 +31,12 @@ app.post("/api/GetStudentNumber", async (req, res) => {
     res.json({ number });
   }
 });
-
+app.get("/api/GetUnits", (req, res) => {
+  getUnits();
+  res.send("<h1>get units</h1>");
+});
+// Serve out any static assets correctly
+app.use(express.static("../client/build"));
 // Any routes that don't match on our static assets or api should be sent to the React Application
 // This allows for the use of things like React Router
 app.use((req, res) => {
