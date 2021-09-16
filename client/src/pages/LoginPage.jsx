@@ -66,7 +66,7 @@ function LoginForm() {
           justifyContent: "center",
           alignItems: "center",
           minHeight: "100vh",
-          marginLeft: "70%",
+          marginRight: "10%",
         }}
       >
         <Paper
