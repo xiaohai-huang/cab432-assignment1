@@ -1,28 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 
-
-import LoginForm from "./components/Login";
-
+import LoginForm from "./pages/LoginPage";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import ContentPage from "./pages/ContentPage";
+import { CssBaseline } from "@material-ui/core";
 function App() {
-  const [assessments, setAssessments] = useState([]);
-
-  // const handleSearch = () => {
-  //   api("/api/Assessments", {
-  //     method: "POST",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ studentNumber: sNumber, password: pwd }),
-  //   }).then((response) => setAssessments(response));
-  // };
-
-  console.log(assessments);
 
   return (
-    <div>
-      <LoginForm />
-    </div>
+    <Router>
+      <CssBaseline />
+      <Switch>
+        <Route exact path="/login">
+          <LoginForm />
+        </Route>
+        <Route path="/content">
+          <ContentPage />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

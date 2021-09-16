@@ -6,3 +6,22 @@ export const api = (endpoint, config) => {
   const response = fetch(URL + endpoint, config).then((res) => res.json());
   return response;
 };
+
+export const getAssessments = (sNumber, password) => {
+  return api("/api/Assessments", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ studentNumber: sNumber, password }),
+  });
+};
+
+export const getNews = async (unitNames) => {
+  const requests = unitNames.map(async (unitName) => {
+    return await api(`/api/News?unitName=${unitName}`);
+  });
+
+  return (await Promise.all(requests)) || [];
+};
