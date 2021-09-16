@@ -14,28 +14,22 @@ async function getUnits(username = "", password = "") {
   });
 
   const page = await browser.newPage();
-  await page.goto("https://secure.qut.edu.au/login/", {
-    waitUntil: "networkidle2",
-  });
-  await page.waitForNavigation();
+  await page.goto("https://blackboard.qut.edu.au/");
+  await page.waitForSelector("#username");
 
   const title = await page.title();
   console.log(title);
   await page.type("#username", username);
   await page.type("#password", password);
   await page.click("#kc-login");
-  await page.waitForNavigation();
 
   // Go to BB to get units
-  await page.goto("https://blackboard.qut.edu.au/", {
-    waitUntil: "networkidle2",
-  });
-  await page.waitForNavigation({
-    waitUntil: "networkidle2",
-  });
-  await page.screenshot({ path: "h.jpg" });
+  await page.waitForSelector("#topTabs");
+  await page.screenshot({ path: "before-run-js.jpg" });
 
   const units = (await page.evaluate(parseUnits)) || [];
+  await page.screenshot({ path: "after-run-js.jpg" });
+
   console.log({ units });
   await browser.close();
   return units || [];

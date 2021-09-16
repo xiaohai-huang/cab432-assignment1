@@ -33,14 +33,14 @@ app.post("/api/GetStudentNumber", async (req, res) => {
   }
 });
 
-app.get("/api/Units", async (req, res) => {
+app.post("/api/Units", async (req, res) => {
+  const { studentNumber, password } = req.body;
   try {
-    const units = (await getUnits("n10172912", "Xiaohai520%")) || [];
+    const units = (await getUnits(studentNumber, password)) || [];
     res.json({ units });
   } catch (err) {
-    console.log("Error occured in finding units");
     console.log(err);
-    res.json({ units: [] });
+    res.json({ units: [], error: "Incorrect username or password." });
   }
 });
 
@@ -48,10 +48,17 @@ app.get("/api/Units", async (req, res) => {
 app.post("/api/Assessments", async (req, res) => {
   const { studentNumber, password } = req.body;
   console.log({ studentNumber, password });
-  const units = await getUnits(studentNumber, password);
+  let units;
+  try {
+    units = await getUnits(studentNumber, password);
+  } catch (error) {
+    res.json({ error: "Incorrect username or password." });
+    return;
+  }
+
   const assessments = await Promise.all(
     units.map(async (unit) => {
-      return await getAssessment(unit);
+      return { unit, assessments: await getAssessment(unit) };
     })
   );
   res.json({ assessments });
