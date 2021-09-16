@@ -17,9 +17,6 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import dayjs from "dayjs";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
-  },
   media: {
     height: 0,
     paddingTop: "56.25%", // 16:9
