@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -18,7 +18,7 @@ import { useHistory } from "react-router-dom";
 import AssessmentTab from "./AssessmentTab";
 import NewsTab from "./NewsTab";
 import { ASSESSMENTS_DATA, NEWS_DATA, UNIT_DATA } from "../utils/data";
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box, Button, Typography, useMediaQuery } from "@material-ui/core";
 
 function a11yProps(index) {
   return {
@@ -72,7 +72,8 @@ export default function ContentPage() {
     default: {
     }
   }
-
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -86,7 +87,11 @@ export default function ContentPage() {
             <Tab label="News" {...a11yProps(1)} />
           </Tabs>
           <Box pr={3} display="flex" alignItems="center">
-            <Typography>QUT Student Number: {sNumber || "N1999999"}</Typography>
+            {!matches && (
+              <Typography>
+                QUT Student Number: {sNumber || "N1999999"}
+              </Typography>
+            )}
             <Box ml={1} />
             <Button
               color="secondary"

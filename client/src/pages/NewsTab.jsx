@@ -14,7 +14,7 @@ function NewsTab({ news }) {
         <Box mb={3} />
         <Grid container spacing={3}>
           {news.map((n) => (
-            <Grid xs={4} item key={n.title}>
+            <Grid xs={12} sm={6} md={4} item key={n.title}>
               <NewsItem {...n} />
             </Grid>
           ))}

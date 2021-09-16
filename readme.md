@@ -39,6 +39,6 @@ docker run --name app -p 80:3000 -it --rm \
              -e "TENCENT_CLOUD_SECRET_KEY=czBE4f1A4j8KJ3WjiT3PYVDguytY0Nfs" \
              -e "NEWS_API_KEY=pub_1299aa681b2308b02b14a8510b22779f5f96" \
              -e "NODE_TLS_REJECT_UNAUTHORIZED=0" \
-             assignment1
+             xiaohaihuang/assignment1
 ```
 

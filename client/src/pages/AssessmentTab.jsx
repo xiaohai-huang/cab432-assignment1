@@ -12,7 +12,7 @@ function AssessmentTab({ units, assessments }) {
         <Box mb={3} />
         <Grid container spacing={3}>
           {assessments.map((unit, i) => (
-            <Grid item key={i} xs={4}>
+            <Grid item key={i} xs={12} md={6}>
               <Typography variant="h6">
                 {units[i].unitCode}-{units[i].unitName}
               </Typography>
