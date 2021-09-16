@@ -2,12 +2,13 @@ require("dotenv").config();
 
 const path = require("path");
 const express = require("express");
-const getStudentNumber = require("./ocr");
+const getStudentNumber = require("./api/ocr");
 const app = express();
 const port = process.env.SERVER_PORT || 3000;
 const cors = require("cors");
 const morgan = require("morgan");
-const { getUnits, getAssessment } = require("./qut");
+const { getUnits, getAssessment } = require("./api/qut");
+const getNews = require("./api/news");
 
 app.use(cors());
 app.use(express.json({ limit: "50mb" })); // <==== parse request body as JSON
@@ -55,13 +56,27 @@ app.post("/api/Assessments", async (req, res) => {
     res.json({ error: "Incorrect username or password." });
     return;
   }
+  try {
+    const data = await Promise.all(
+      units.map(async (unit) => {
+        const { unitCode } = unit;
+        return { unit, assessments: await getAssessment(unitCode) };
+      })
+    );
+    res.json({ data });
+  } catch (_) {
+    res.json({ error: "Something went wrong" });
+  }
+});
 
-  const assessments = await Promise.all(
-    units.map(async (unit) => {
-      return { unit, assessments: await getAssessment(unit) };
-    })
-  );
-  res.json({ assessments });
+app.get("/api/News", (req, res) => {
+  const unitName = req.query.unitName || "Cloud Computing";
+  getNews(unitName)
+    .then((news) => res.json({ news }))
+    .catch((error) => {
+      console.log(error);
+      res.json({ error: "Unable to find news!" });
+    });
 });
 
 // Serve out any static assets correctly

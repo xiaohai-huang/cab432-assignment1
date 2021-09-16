@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const parseUnits = require("./utils/tools");
+const parseUnits = require("../utils/tools");
 const fetch = require("node-fetch");
 
 async function getUnits(username = "", password = "") {
