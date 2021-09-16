@@ -33,7 +33,13 @@ async function parseUnits() {
   const list = Array.from(
     el.getElementById("2021SEM-2").getElementsByClassName("qutmyunits_units3")
   );
-  const units = list.map((div) => div.innerText.trim().split("_")[0]);
+
+  const units = list.map((div) => {
+    const text = div.innerText.trim();
+    const unitCode = text.split("_")[0];
+    const unitName = text.split(":").pop().trim();
+    return { unitCode, unitName };
+  });
   console.log(units);
   return units;
 }
