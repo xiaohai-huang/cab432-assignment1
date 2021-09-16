@@ -1,11 +1,15 @@
 # CAB 432 Assignment
+
 This is a simple example of serving a React Application from within your Express Server, alongside your API. In this example we have two separate folders, client and server - they each house their respective files and logic. We assume at this point you're able to containerize an application yourself so we have left that as an exercise for you.
 
 ### Client
+
 `REACT_APP_PORT` is used to specify the PORT to send request to during the development phrase.
 
 ### Server
+
 Environment variables needed by the server
+
 ```bash
 # The port that the api server is listening
 SERVER_PORT
@@ -16,22 +20,23 @@ TENCENT_CLOUD_SECRET_KEY
 NEWS_API_KEY
 NODE_TLS_REJECT_UNAUTHORIZED
 ```
-### Modifications
 
+### Modifications
 
 ### Getting Started - dev
 
-``` bash
+```bash
 # change Dockerfile last line to run dev (nodemon)
 CMD ["npm","run", "dev", "--prefix", "/app/server"]
 docker build -t assignment1 .
-docker run --name app -p 3000:3000 -v $(pwd)/server:/app/server -v /app/server/node_modules -it --env-file .env assignment1
+docker run --name app -p 3100:3000 -v $(pwd)/server:/app/server -v /app/server/node_modules -it --rm --env-file .env assignment1
 docker exec -it app bash
 docker rm app -fv
 ```
 
 ### Deployment
-``` bash
+
+```bash
 # change Dockerfile last line to run start
 CMD ["npm","run", "start", "--prefix", "/app/server"]
 docker run --name app -p 80:3000 -it --rm \
@@ -41,4 +46,3 @@ docker run --name app -p 80:3000 -it --rm \
              -e "NODE_TLS_REJECT_UNAUTHORIZED=0" \
              xiaohaihuang/assignment1
 ```
-

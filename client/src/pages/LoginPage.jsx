@@ -122,7 +122,7 @@ function LoginForm() {
               variant="contained"
               color="primary"
               sx={{ mt: 3, mb: 2 }}
-              disabled={!sNumber || sNumber === -1 || !pwd}
+              disabled={!sNumber || sNumber === -1 || !pwd || loading}
             >
               Sign In
             </Button>
