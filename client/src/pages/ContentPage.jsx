@@ -42,11 +42,16 @@ export default function ContentPage() {
   const assessments = useSelector(selectAssessments);
   const sNumber = useSelector(selectSNumber);
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+
   // No info, ask the user to login
-  // if (units.length === 0 || assessments.length === 0) {
-  //   history.push("/login");
-  //   return <></>;
-  // }
+  if (process.env.NODE_ENV === "production") {
+    if (units.length === 0 || assessments.length === 0) {
+      history.push("/login");
+      return <></>;
+    }
+  }
 
   const handleChange = (event, newValue) => {
     setTabIndex(newValue);
@@ -72,8 +77,7 @@ export default function ContentPage() {
     default: {
     }
   }
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
