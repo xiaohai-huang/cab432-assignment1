@@ -17,7 +17,7 @@ export const qutSlice = createSlice({
       state.sNumber = sNumber;
       state.password = password;
     },
-    setAssessment: (state, action) => {
+    setAssessments: (state, action) => {
       state.assessments = action.payload;
     },
     setUnits: (state, action) => {
@@ -30,6 +30,12 @@ export const qutSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { login, setAssessment, setUnits, setNews } = qutSlice.actions;
+export const { login, setAssessments, setUnits, setNews } = qutSlice.actions;
+
+// Selectors
+export const selectAssessments = (state) => state.qut.assessments;
+export const selectUnits = (state) => state.qut.units;
+export const selectNews = (state) => state.qut.news;
+export const selectSNumber = (state) => state.qut.sNumber;
 
 export default qutSlice.reducer;

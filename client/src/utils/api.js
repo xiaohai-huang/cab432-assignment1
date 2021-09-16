@@ -20,8 +20,13 @@ export const getAssessments = (sNumber, password) => {
 
 export const getNews = async (unitNames) => {
   const requests = unitNames.map(async (unitName) => {
-    return await api(`/api/News?unitName=${unitName}`);
+    const response = await api(`/api/News?unitName=${unitName}`);
+    return response?.news?.results || [];
   });
-
-  return (await Promise.all(requests)) || [];
+  const allNews = await Promise.all(requests);
+  let result = [];
+  allNews.forEach((n) => {
+    result = result.concat(n);
+  });
+  return result || [];
 };

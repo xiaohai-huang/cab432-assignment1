@@ -3,16 +3,17 @@ import {
   Box,
   Button,
   Container,
-  CssBaseline,
   LinearProgress,
+  Paper,
   TextField,
+  Typography,
 } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 
 import ImageUploader from "../components/ImageUploader";
 import useStudentNumber from "../utils/useStudentNumber";
 import { getAssessments, getNews } from "../utils/api";
-import { login, setAssessment, setNews, setUnits } from "../redux/qutSlice";
+import { login, setAssessments, setNews, setUnits } from "../redux/qutSlice";
 import { useHistory } from "react-router-dom";
 
 function LoginForm() {
@@ -38,7 +39,7 @@ function LoginForm() {
     setPwdError(error);
     if (!error) {
       dispatch(login({ sNumber, password: pwd }));
-      dispatch(setAssessment(assessments));
+      dispatch(setAssessments(assessments));
       dispatch(setUnits(units));
       dispatch(setNews(news));
       history.push("/content");
@@ -47,58 +48,85 @@ function LoginForm() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
+    <Box
+      style={{
+        backgroundImage: "url(/qutlogin-bg-min.jpg)",
+        backgroundRepeat: "no-repeat",
+        height: "100vh",
+      }}
+    >
+      <Container
+        maxWidth="sm"
+        style={{
           display: "flex",
-          flexDirection: "column",
+          justifyContent: "center",
           alignItems: "center",
+          minHeight: "100vh",
+          marginLeft: "60%",
         }}
       >
-        <ImageUploader getBase64={setBase64} />
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            label="QUT Student Number"
-            disabled
-            error={Boolean(error)}
-            helperText={error}
-            value={sNumber}
-          />
-          {idLoading && <LinearProgress />}
-          <TextField
-            error={Boolean(pwdError)}
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            helperText={pwdError}
-            value={pwd}
-            onChange={(e) => setPwd(e.target.value)}
-          />
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            sx={{ mt: 3, mb: 2 }}
-            disabled={!sNumber || sNumber === -1 || !pwd}
+        <Paper
+          variant="outlined"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            height: "550px",
+            padding: "30px",
+          }}
+        >
+          <Typography variant="h4" align="center">
+            QUT Student Study Helper Mashups
+          </Typography>
+          <Box mt={3} />
+          <ImageUploader getBase64={setBase64} />
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
           >
-            Sign In
-          </Button>
-          {loading && <LinearProgress />}
-        </Box>
-      </Box>
-    </Container>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              label="QUT Student Number"
+              disabled
+              error={Boolean(error)}
+              helperText={error}
+              value={sNumber}
+            />
+            {idLoading && <LinearProgress />}
+            <TextField
+              error={Boolean(pwdError)}
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              helperText={pwdError}
+              value={pwd}
+              onChange={(e) => setPwd(e.target.value)}
+            />
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              sx={{ mt: 3, mb: 2 }}
+              disabled={!sNumber || sNumber === -1 || !pwd}
+            >
+              Sign In
+            </Button>
+            {loading && <LinearProgress />}
+          </Box>
+        </Paper>
+      </Container>
+    </Box>
   );
 }
 
