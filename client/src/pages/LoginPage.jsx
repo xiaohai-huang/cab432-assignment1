@@ -50,9 +50,13 @@ function LoginForm() {
   return (
     <Box
       style={{
-        backgroundImage: "url(/qutlogin-bg-min.jpg)",
-        backgroundRepeat: "no-repeat",
-        height: "100vh",
+        height: "100%",
+        width: "100%",
+        background: "url(/qutlogin-bg-min.jpg) no-repeat center center fixed",
+        "-webkit-background-size": "cover",
+        "-moz-background-size": "cover",
+        "-o-background-size": "cover",
+        "background-size": "cover",
       }}
     >
       <Container
@@ -62,7 +66,7 @@ function LoginForm() {
           justifyContent: "center",
           alignItems: "center",
           minHeight: "100vh",
-          marginLeft: "60%",
+          marginLeft: "70%",
         }}
       >
         <Paper
