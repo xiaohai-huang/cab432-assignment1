@@ -29,7 +29,11 @@ NODE_TLS_REJECT_UNAUTHORIZED
 # change Dockerfile last line to run dev (nodemon)
 CMD ["npm","run", "dev", "--prefix", "/app/server"]
 docker build -t assignment1 .
-docker run --name app -p 3000:3000 -v $(pwd)/server:/app/server -v /app/server/node_modules -it --rm --env-file .env xiaohaihuang/assignment1
+docker run --name app -p 3000:3000 \
+            -v $(pwd)/server:/app/server \
+            -v /app/server/node_modules -it --rm \
+            --env-file .env \
+            xiaohaihuang/assignment1
 docker exec -it app bash
 docker rm app -fv
 ```

@@ -36,24 +36,17 @@ RUN apt-get update && apt-get install -y \
 
 # Node process management
 RUN npm install pm2@latest -g
-
 # Client
 WORKDIR /app/client
 COPY /client/package.json .
 COPY /client/package-lock.json .
 RUN npm install
-
-
-
 # Server
 WORKDIR /app/server
 COPY /server/package.json .
 COPY /server/package-lock.json .
 RUN npm install
 RUN chmod -R o+rwx ./node_modules/puppeteer/.local-chromium
-
-
-
 # Copy source code
 WORKDIR /app/client
 COPY ./client .
@@ -65,5 +58,5 @@ COPY ./server .
 ENV SERVER_PORT=3000
 EXPOSE $SERVER_PORT
 
-CMD ["npm","run", "dev", "--prefix", "/app/server"]
-# CMD ["npm","run", "start", "--prefix", "/app/server"]
+# CMD ["npm","run", "dev", "--prefix", "/app/server"]
+CMD ["npm","run", "start", "--prefix", "/app/server"]
