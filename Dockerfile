@@ -33,7 +33,10 @@ RUN apt-get update && apt-get install -y \
     libxss1 \
     libxtst6 \
     xdg-utils
-    
+
+# Node process management
+RUN npm install pm2@latest -g
+
 # Client
 WORKDIR /app/client
 COPY /client/package.json .
