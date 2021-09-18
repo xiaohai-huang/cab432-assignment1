@@ -62,5 +62,5 @@ COPY ./server .
 ENV SERVER_PORT=3000
 EXPOSE $SERVER_PORT
 
-# CMD ["npm","run", "dev", "--prefix", "/app/server"]
-CMD ["npm","run", "start", "--prefix", "/app/server"]
+CMD ["npm","run", "dev", "--prefix", "/app/server"]
+# CMD ["npm","run", "start", "--prefix", "/app/server"]

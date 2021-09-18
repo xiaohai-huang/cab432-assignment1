@@ -31,20 +31,21 @@ function LoginForm() {
     setLoading(true);
 
     const { data, error } = await getAssessments(sNumber, pwd);
-    const units = data.map((item) => item.unit);
-    const assessments = data.map((item) => item.assessments);
-    // Fetch news about my study fields
-    const news = await getNews(units.map((unit) => unit.unitName));
+
     setLoading(false);
     setPwdError(error);
     if (!error) {
+      const units = data.map((item) => item.unit);
+      const assessments = data.map((item) => item.assessments);
+      // Fetch news about my study fields
+      const news = await getNews(units.map((unit) => unit.unitName));
       dispatch(login({ sNumber, password: pwd }));
       dispatch(setAssessments(assessments));
       dispatch(setUnits(units));
       dispatch(setNews(news));
+      console.log({ data, sNumber, pwd });
       history.push("/content");
     }
-    console.log({ data, sNumber, pwd });
   };
 
   return (
