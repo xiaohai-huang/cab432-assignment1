@@ -1,6 +1,6 @@
 # CAB 432 Assignment
 
-This is a simple example of serving a React Application from within your Express Server, alongside your API. In this example we have two separate folders, client and server - they each house their respective files and logic. We assume at this point you're able to containerize an application yourself so we have left that as an exercise for you.
+It have two separate folders, client and server - they each house their respective files and logic. In order to run the container, it needs a few environment variabels, please see the Deployment section for these environment variabels.
 
 ### Client
 
