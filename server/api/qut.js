@@ -43,7 +43,6 @@ async function parseUnits() {
     const unitName = text.split(":").pop().trim();
     return { unitCode, unitName };
   });
-  console.log(units);
   return units;
 }
 
@@ -70,10 +69,8 @@ async function getUnits(username = "", password = "") {
 
   // Go to BB to get units
   await page.waitForSelector("#topTabs");
-  await page.screenshot({ path: "before-run-js.jpg" });
-
+  // Send fetch request to BB API on the browser's console
   const units = (await page.evaluate(parseUnits)) || [];
-  await page.screenshot({ path: "after-run-js.jpg" });
 
   console.log({ units });
   await browser.close();

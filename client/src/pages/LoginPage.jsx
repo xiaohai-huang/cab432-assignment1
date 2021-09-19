@@ -32,8 +32,6 @@ function LoginForm() {
 
     const { data, error } = await getAssessments(sNumber, pwd);
 
-    setLoading(false);
-    setPwdError(error);
     if (!error) {
       const units = data.map((item) => item.unit);
       const assessments = data.map((item) => item.assessments);
@@ -46,6 +44,8 @@ function LoginForm() {
       console.log({ data, sNumber, pwd });
       history.push("/content");
     }
+    setLoading(false);
+    setPwdError(error);
   };
 
   return (

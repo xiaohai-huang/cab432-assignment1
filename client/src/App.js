@@ -1,9 +1,10 @@
 import React from "react";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 import LoginForm from "./pages/LoginPage";
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import ContentPage from "./pages/ContentPage";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+
 function App() {
   return (
     <Router>
